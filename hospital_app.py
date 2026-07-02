@@ -163,7 +163,7 @@ with st.form("triage_form"):
 
   col_cc, coldur = st.columns(2)
   with col_cc:
-    chief_complaint = st.selectbox("Chief complaint", options=list(cc_map.key()))
+    chief_complaint = st.selectbox("Chief complaint", options=list(cc_map.keys()))
   with coldur:
     duration = st.selectbox("Duration", options = list(dur_map.keys()), index=1)
   
