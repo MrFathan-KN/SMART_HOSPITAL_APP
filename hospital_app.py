@@ -169,5 +169,51 @@ with st.form("triage_form"):
   
   st.markdown("<br>", unsafe_allow_html = True)
 
+  #section3
+  st.markdown("""
+  <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:14px;
+                padding:20px 24px;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+            <span style="background:#ea580c;color:white;border-radius:8px;
+                         padding:4px 10px;font-size:12px;font-weight:600;">3</span>
+            <span style="font-size:16px;font-weight:600;color:#7c2d12;">How would you rate the severity?</span>
+        </div>
+    </div>
+  """, unsafe_allow_html = True)
+
+  col_temp, col_hr = st.columns(2)
+
+  with col_temp:
+    temperature_level = st.selectbox("Temperature", options=list(temp_map.keys()), index=1)
+  with col_hr:
+    heart_rate_level  = st.selectbox("Heart rate", options=list(hr_map.keys()), index=1)
+  
+  st.markdown("<br>", unsafe_allow_html = True)
+
+  #section 4
+  st.markdown("""
+  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:14px;
+                padding:20px 24px;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <span style="background:#059669;color:white;border-radius:8px;
+                         padding:4px 10px;font-size:12px;font-weight:600;">4</span>
+            <span style="font-size:16px;font-weight:600;color:#064e3b;">Do you have any of the following?</span>
+        </div>
+    </div>
+  """, unsafe_allow_html = True)
+
+  ch1, ch2, ch3, _ = st.columns(4)
+  with ch1: hypertension  = st.checkbox("🩺 High Blood Pressure")
+  with ch2: heart_disease = st.checkbox("❤️ Heart Disease")
+  with ch3: asthma = st.checkbox("💨 Asthma")
+
+  st.markdown("<br>", unsafe_allow_html = True)
+
+  #SECTION 5
+  
+
+
+
+
 
 
