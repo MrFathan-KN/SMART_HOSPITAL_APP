@@ -210,10 +210,62 @@ with st.form("triage_form"):
   st.markdown("<br>", unsafe_allow_html = True)
 
   #SECTION 5
-  
 
+  st.markdown("""
+   <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;
+                padding:20px 24px;margin-bottom:24px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+            <span style="background:#475569;color:white;border-radius:8px;
+                         padding:4px 10px;font-size:12px;font-weight:600;">5</span>
+            <span style="font-size:16px;font-weight:600;color:#1e293b;">Patient Information</span>
+        </div>
+    </div>
+  """, unsafe_allow_html=True)
 
+  col_age, col_gen = st.columns(2)
+  with col_age:
+    age = st.number_input("Age", min_value=1, max_value=120, value=20)
+  with col_gen:
+    gender = st.selectbox("Gender", options=['Female', 'Male'])
 
+  submitted = st.form_submit_button("Get AI Recommendation →")
 
+# RESULT PART
+if submitted:
+  patient = pd_DataFrame([{
+      'age': age,
+      'gender': gender,
+      'fever' : int(fever),
+      'cough' : int(cough),
+      'headache' : int(headache),
+      'chest_pain' :int(chest_pain),
+      'stomach_pain' : int(stomach_pain),
+      'shortness_breath' : int(shortness_breath),
+      'nausea_vomiting' : int(nausea_vomiting),
+      'dizziness' : int(dizziness),
+      'skin_rash' : int(skin_rash),
+      'temperature_level' : temp_map.get(temperature_level, 1),
+      'heart_rate_level' : hr_map.get(heart_rate_level, 1),
+      'duration' : dur_map.get(duration, 1),
+      'asthma' : int(asthma),
+      'hypertension' : int(hypertension),
+      'heart_disease' : int(heart_disease),
+      'chief_complaint' : cc_map.get(chief_complaint, 9)
+  }])
 
+  patient_scaled = patient.copy()
+  patient_scaled[cols_to_scale] = scaler.transform(patient[cols_to_scale])
 
+  pred = model.predict(patient_scaled[features])[0]
+  proba = model.predict_proba(patient_scaled[features])[0]
+  dept_name = dept_map_inv[pred]
+  confidence = proba[pred] * 100
+  info = DEPT_INFO[dept_name]
+
+  st.markdown("---")
+  st.markdown("""
+  <div style="font-size:22px;font-weight:700;color:#111827;margin-bottom:4px;">AI Recommendation</div>
+  <div style="font-size:14px;color:#6b7280;margin-bottom:1.5rem;">Based on the information you provided</div>
+  """, unsafe_allow_html = True)
+
+  res_col, prob_col = st.columns([3,2])
