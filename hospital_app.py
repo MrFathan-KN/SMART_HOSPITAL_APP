@@ -230,7 +230,7 @@ with st.form("triage_form"):
 
 # RESULT PART
 if submitted:
-  patient = pd_DataFrame([{
+  patient = pd.DataFrame([{
       'age': age,
       'gender': gender,
       'fever' : int(fever),
